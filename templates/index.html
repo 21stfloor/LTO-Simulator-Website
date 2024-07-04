@@ -2,7 +2,7 @@
 
     {% block content %}
     <canvas id="unity-canvas" width=1920 height=1080 style="width: 1920; height: 1080; background: #231F20"></canvas>
-    <script src="{% static 'Build/static.loader.js' %}"></script>
+    <script src="{% static 'Build/LTO-Simulator.loader.js' %}"></script>
     <script>
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
         // Mobile device style: fill the whole browser client area with the game canvas:
@@ -20,9 +20,9 @@
       }
 
       createUnityInstance(document.querySelector("#unity-canvas"), {
-        dataUrl: "{% static 'Build/static.data' %}",
-        frameworkUrl: "{% static 'Build/static.framework.js' %}",
-        codeUrl: "{% static 'Build/static.wasm' %}",
+        dataUrl: "{% static 'Build/LTO-Simulator.data' %}",
+        frameworkUrl: "{% static 'Build/LTO-Simulator.framework.js' %}",
+        codeUrl: "{% static 'Build/LTO-Simulator.wasm' %}",
         streamingAssetsUrl: "{% static 'StreamingAssets' %}",
         companyName: "DefaultCompany",
         productName: "LTOSim",

@@ -136,3 +136,5 @@ GitHub.sublime-settings
 .history
 
 staticfiles/
+.env
+static/Build/LTO-Simulator.data
