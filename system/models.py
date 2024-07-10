@@ -4,6 +4,7 @@ from django.utils import timezone
 from ltosim.managers import CustomUserManager
 from django.utils.translation import gettext_lazy as _
 from django.db.models import Max
+from mdeditor.fields import MDTextField
 
 from ltosim.settings import MAX_LESSON1_LEVELS_ENV, MAX_LESSON2_LEVELS_ENV, MAX_LESSON3_LEVELS_ENV
 
@@ -93,3 +94,26 @@ class Score(models.Model):
     def save(self, *args, **kwargs):
         self.session_no = gen_session_no(self.lesson_name, self.user)
         super().save(*args, **kwargs)  # Call the "real" save() method.
+
+class ReviewerCategories(models.IntegerChoices):
+    CAR_TRAFFIC_RULES = 0, "Traffic Rules and Regulations(Car)"
+    CAR_ROAD_SIGNAGE = 1, "Road Signage(Car)"
+    CAR_VEHICLE_PARTS = 2, "Vehicle Basic Parts(Car)"
+    MOTOR_TRAFFIC_RULES = 3, "Traffic Rules and Regulations(Motorcycle)"
+    MOTOR_ROAD_SIGNAGE = 4, "Road Signage(Motorcycle)"
+    MOTOR_VEHICLE_PARTS = 5, "Vehicle Basic Parts(Motorcycle)"
+
+class Reviewer(models.Model):
+    key = models.CharField(max_length=50, blank=False, verbose_name="Title")
+    category = models.PositiveSmallIntegerField(choices=ReviewerCategories.choices, default=ReviewerCategories.CAR_TRAFFIC_RULES)
+    picture = models.ImageField(
+        upload_to='images/', blank=True, null=True, default='')
+    content = MDTextField(null=True, blank=True)    
+    updated_at = models.DateTimeField(auto_now=True)
+    order_position = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        unique_together = ('category', 'order_position')
+
+    def __str__(self):
+        return self.key

@@ -9,8 +9,8 @@ from system.forms import NewUserForm
 from django.contrib import messages
 from rest_framework import viewsets, mixins, generics
 from system.mixins import SuperuserRequiredMixin
-from system.models import Announcement, CustomUser, Download, Score
-from system.serializers import ScoreSerializer
+from system.models import Announcement, CustomUser, Download, Reviewer, Score
+from system.serializers import ReviewerSerializer, ScoreSerializer
 from django.views.generic import ListView
 from django_tables2.config import RequestConfig
 from system.tables import AnnouncementTable, ScoreTable
@@ -151,3 +151,15 @@ def get_progress(user, session_no, lesson_max, lesson_name):
         pass
 
     return round(min(progress, 100), 2)
+
+
+class ReviewerViewSet(viewsets.ModelViewSet):
+    queryset = Reviewer.objects.all().order_by('order_position')
+    serializer_class = ReviewerSerializer
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        category = self.request.query_params.get('category', None)
+        if category is not None:
+            queryset = queryset.filter(category=category)
+        return queryset
