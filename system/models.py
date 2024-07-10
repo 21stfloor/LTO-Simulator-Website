@@ -1,10 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.forms import ValidationError
 from django.utils import timezone
 from ltosim.managers import CustomUserManager
 from django.utils.translation import gettext_lazy as _
 from django.db.models import Max
-from mdeditor.fields import MDTextField
 
 from ltosim.settings import MAX_LESSON1_LEVELS_ENV, MAX_LESSON2_LEVELS_ENV, MAX_LESSON3_LEVELS_ENV
 
@@ -108,7 +108,7 @@ class Reviewer(models.Model):
     category = models.PositiveSmallIntegerField(choices=ReviewerCategories.choices, default=ReviewerCategories.CAR_TRAFFIC_RULES)
     picture = models.ImageField(
         upload_to='images/', blank=True, null=True, default='')
-    content = MDTextField(null=True, blank=True)    
+    content = models.TextField(blank=False)
     updated_at = models.DateTimeField(auto_now=True)
     order_position = models.PositiveIntegerField(default=0)
 
@@ -117,3 +117,27 @@ class Reviewer(models.Model):
 
     def __str__(self):
         return self.key
+
+class Question(models.Model):
+    text = models.TextField(blank=False)
+    category = models.PositiveSmallIntegerField(choices=ReviewerCategories.choices, default=ReviewerCategories.CAR_TRAFFIC_RULES)
+    choice1 = models.CharField(max_length=255)
+    choice2 = models.CharField(max_length=255)
+    choice3 = models.CharField(max_length=255)
+    correct_choice = models.CharField(max_length=255)
+
+    def clean(self):
+        # Check that none of the choices are blank
+        if not self.choice1 or not self.choice2 or not self.choice3:
+            raise ValidationError("All choices must be provided and cannot be blank.")
+        
+        # Check that the correct_choice is one of the choices
+        if self.correct_choice not in [self.choice1, self.choice2, self.choice3]:
+            raise ValidationError("Correct choice must be one of the given choices.")
+    
+    def save(self, *args, **kwargs):
+        self.full_clean()  # This will call clean() and raise ValidationError if validation fails
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.text

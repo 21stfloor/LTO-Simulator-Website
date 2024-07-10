@@ -1,5 +1,5 @@
 from django.contrib import admin
-from system.models import Announcement, CustomUser, Download, Reviewer, Score
+from system.models import Announcement, CustomUser, Download, Question, Reviewer, Score
 from django.contrib.auth.models import Group
 from django_reverse_admin import ReverseModelAdmin
 from admin_interface.models import Theme
@@ -13,6 +13,10 @@ class ReviewerAdmin(admin.ModelAdmin):
     exclude = ('updated_at',)
     list_display = ('key', 'category', 'order_position', 'updated_at')
     list_editable = ('order_position',)
+
+@admin.register(Question)
+class Questiondmin(admin.ModelAdmin):
+    list_display = ('text', 'category', 'correct_choice')
 
 
 admin.site.site_header = "LTO - Simulator"

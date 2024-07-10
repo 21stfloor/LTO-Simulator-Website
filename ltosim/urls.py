@@ -5,12 +5,13 @@ from django.conf import settings
 from system import views
 from rest_framework import routers, serializers, viewsets
 from django.contrib.auth.views import LogoutView
-from system.views import MyLoginView, ReviewerViewSet
+from system.views import MyLoginView, QuestionViewSet, ReviewerViewSet
 from django.urls import include, re_path
 
 router = routers.DefaultRouter()
 router.register(r'scores', views.ScoreViewSet)
 router.register(r'reviewers', ReviewerViewSet)
+router.register(r'questions', QuestionViewSet)
 
 
 urlpatterns = [
@@ -27,6 +28,5 @@ urlpatterns = [
         LogoutView.as_view(),
         name='logout',
     ),
-    path("accounts/register", views.register_request, name="register"),
-    re_path(r'mdeditor/', include('mdeditor.urls'))
+    path("accounts/register", views.register_request, name="register")
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

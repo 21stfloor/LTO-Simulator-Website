@@ -9,8 +9,8 @@ from system.forms import NewUserForm
 from django.contrib import messages
 from rest_framework import viewsets, mixins, generics
 from system.mixins import SuperuserRequiredMixin
-from system.models import Announcement, CustomUser, Download, Reviewer, Score
-from system.serializers import ReviewerSerializer, ScoreSerializer
+from system.models import Announcement, CustomUser, Download, Question, Reviewer, Score
+from system.serializers import QuestionSerializer, ReviewerSerializer, ScoreSerializer
 from django.views.generic import ListView
 from django_tables2.config import RequestConfig
 from system.tables import AnnouncementTable, ScoreTable
@@ -163,3 +163,7 @@ class ReviewerViewSet(viewsets.ModelViewSet):
         if category is not None:
             queryset = queryset.filter(category=category)
         return queryset
+
+class QuestionViewSet(viewsets.ModelViewSet):
+    queryset = Question.objects.all()
+    serializer_class = QuestionSerializer
