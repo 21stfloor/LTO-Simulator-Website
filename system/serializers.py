@@ -5,7 +5,7 @@ from rest_framework import routers, serializers, viewsets
 class ReviewerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reviewer
-        fields = '__all__'
+        fields = ['key', 'category', 'picture', 'content', 'order_position']
 
 class ScoreSerializer(serializers.ModelSerializer):
     class Meta:
