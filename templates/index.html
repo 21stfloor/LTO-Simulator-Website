@@ -20,9 +20,9 @@
       }
 
       createUnityInstance(document.querySelector("#unity-canvas"), {
-        dataUrl: "{% static 'Build/LTO-Simulator.data' %}",
-        frameworkUrl: "{% static 'Build/LTO-Simulator.framework.js' %}",
-        codeUrl: "{% static 'Build/LTO-Simulator.wasm' %}",
+        dataUrl: "{% static 'Build/LTO-Simulator.data.unityweb' %}",
+        frameworkUrl: "{% static 'Build/LTO-Simulator.framework.js.unityweb' %}",
+        codeUrl: "{% static 'Build/LTO-Simulator.wasm.unityweb' %}",
         streamingAssetsUrl: "{% static 'StreamingAssets' %}",
         companyName: "DefaultCompany",
         productName: "LTOSim",
