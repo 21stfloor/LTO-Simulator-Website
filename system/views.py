@@ -21,12 +21,14 @@ from django_filters.views import FilterView
 from django.db.models import Max
 from django.contrib.auth.views import LoginView
 from rest_framework.permissions import AllowAny
+from django.views.decorators.gzip import gzip_page
 
 
 def index(request):
     context = {}
     return render(request, 'pages/lessons.html', context)
 
+# @gzip_page
 def play(request):
     context = {}
     return render(request, 'index.html', context)
