@@ -22,6 +22,7 @@ from django.db.models import Max
 from django.contrib.auth.views import LoginView
 from rest_framework.permissions import AllowAny
 from django.views.decorators.gzip import gzip_page
+from django.utils import translation
 
 
 def index(request):
@@ -154,10 +155,20 @@ def get_progress(user, session_no, lesson_max, lesson_name):
 
     return round(min(progress, 100), 2)
 
-
+    
 class ReviewerViewSet(viewsets.ModelViewSet):
     queryset = Reviewer.objects.all().order_by('order_position')
     serializer_class = ReviewerSerializer
+
+    def initialize_request(self, request, *args, **kwargs):
+        request = super().initialize_request(request, *args, **kwargs)
+        lang = request.query_params.get('lang', 'en')
+        translation.activate(lang)
+        return request
+
+    def finalize_response(self, request, response, *args, **kwargs):
+        translation.deactivate()
+        return super().finalize_response(request, response, *args, **kwargs)
 
     def get_queryset(self):
         queryset = super().get_queryset()

@@ -59,7 +59,8 @@ INSTALLED_APPS = [
     'system',
     'rest_framework',
     'django_tables2',
-    'django_filters'
+    'django_filters',
+    'modeltranslation'
 ]
 
 REST_FRAMEWORK = {
@@ -169,6 +170,13 @@ LOGOUT_REDIRECT_URL = '/'
 # login details danielc / ofhNrp21f5bkj3xj
 
 LANGUAGE_CODE = 'en-us'
+
+LANGUAGES = (
+    ('en', 'English'),
+    ('fil', 'Filipino'),
+)
+
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
 
 USE_I18N = True
 
