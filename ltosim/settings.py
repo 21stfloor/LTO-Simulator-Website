@@ -46,7 +46,9 @@ ALLOWED_HOSTS = ['127.0.0.1', 'ltosimulator.pythonanywhere.com']
 INSTALLED_APPS = [
     "admin_interface",
     "colorfield",
+    # 'system.apps.MyOwnConfig',
     'django.contrib.admin',
+    
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -199,3 +201,5 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+PLAYFAB_SECRET_KEY = 'NEWWSYXID3P4CU5HZKCZHAN96KWAW8I83PJOOYK358F3Q97XHM'

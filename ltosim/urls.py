@@ -7,18 +7,18 @@ from rest_framework import routers, serializers, viewsets
 from django.contrib.auth.views import LogoutView
 from system.views import MyLoginView, QuestionViewSet, ReviewerViewSet
 from django.urls import include, re_path
+from system.admin import admin_site
 
 router = routers.DefaultRouter()
 router.register(r'scores', views.ScoreViewSet)
 router.register(r'reviewers', ReviewerViewSet)
 router.register(r'questions', QuestionViewSet)
 
-
 urlpatterns = [
     path('', include('system.urls', namespace='system')),
     path('api/', include((router.urls, 'app_name'), namespace='instance_name')),
-    path('admin/', admin.site.urls),
-    
+    path('admin/', admin_site.urls),
+    # path("admin-users/", views.user_list, name="users"),
     path('accounts/login/',
         MyLoginView.as_view(),
         name='login',

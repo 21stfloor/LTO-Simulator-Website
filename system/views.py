@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
+from ltosim import settings
 from ltosim.settings import MAX_LESSON1_LEVELS_ENV, MAX_LESSON2_LEVELS_ENV, MAX_LESSON3_LEVELS_ENV
 from system.forms import NewUserForm
 from django.contrib import messages
@@ -23,6 +24,10 @@ from django.contrib.auth.views import LoginView
 from rest_framework.permissions import AllowAny
 from django.views.decorators.gzip import gzip_page
 from django.utils import translation
+from django.http import HttpResponseForbidden
+from django.contrib.auth.decorators import user_passes_test
+import requests
+from django.http import JsonResponse
 
 
 def index(request):
@@ -187,3 +192,67 @@ class QuestionViewSet(viewsets.ModelViewSet):
         if category is not None:
             queryset = queryset.filter(category=category)
         return queryset
+    
+def is_admin(user):
+    return user.is_superuser
+
+@user_passes_test(is_admin)
+def user_list(request):
+    if not request.user.is_superuser:
+        return HttpResponseForbidden("You are not authorized to view this page.")
+    # Logic for the view
+    return render(request, 'admin/user_list.html')
+
+@user_passes_test(is_admin)
+def get_users(request):
+    if not request.user.is_superuser:
+        return HttpResponseForbidden("You are not authorized to view this page.")
+    api_url = "https://5E1B8.playfabapi.com/Admin/GetPlayersInSegment"
+    request_data = {
+        "SegmentId": "7B295BFF21FA3646"
+    }
+    headers = {
+        "Content-Type": "application/json",
+        "X-SecretKey": settings.PLAYFAB_SECRET_KEY  # Load the secret key from settings
+    }
+
+    try:
+        response = requests.post(api_url, headers=headers, json=request_data)
+        response_data = response.json()
+        if response.status_code == 200 and response_data.get("status") == "OK":
+            return JsonResponse(response_data)
+        else:
+            return JsonResponse({"error": "Error fetching player data"}, status=500)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+    
+@user_passes_test(is_admin)
+def delete_user(request):
+    if not request.user.is_superuser:
+        return HttpResponseForbidden("You are not authorized to view this page.")
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Invalid request method'}, status=400)
+    # Get data from request
+    playerId = request.POST.get('playerId', None)
+
+    if playerId is None:
+        return JsonResponse({'error': 'Invalid request method'}, status=400)
+
+    api_url = "https://5E1B8.playfabapi.com/Admin/DeleteMasterPlayerAccount"
+    headers = {
+        "Content-Type": "application/json",
+        "X-SecretKey": settings.PLAYFAB_SECRET_KEY  # Load the secret key from settings
+    }
+    request_data = {
+        "PlayFabId": playerId
+    }
+
+    try:
+        response = requests.post(api_url, headers=headers, json=request_data)
+        response_data = response.json()
+        if response.status_code == 200 and response_data.get("status") == "OK":
+            return JsonResponse(response_data)
+        else:
+            return JsonResponse({f"error": "Error deleting user: {response_data}"}, status=500)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
