@@ -125,6 +125,8 @@ class Question(models.Model):
     choice2 = models.CharField(max_length=255)
     choice3 = models.CharField(max_length=255)
     correct_choice = models.CharField(max_length=255)
+    picture = models.ImageField(
+        upload_to='images/questions/', blank=True, null=True, default='')
 
     def clean(self):
         # Check that none of the choices are blank

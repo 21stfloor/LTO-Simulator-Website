@@ -10,12 +10,12 @@ class ReviewerSerializer(serializers.ModelSerializer):
 class ScoreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Score
-        fields = ('user', 'score', 'lesson_name', 'time','summary')
+        fields = ('user', 'score', 'lesson_name', 'time', 'summary')
 
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
-        fields = ['id', 'text', 'category', 'choice1', 'choice2', 'choice3', 'correct_choice']
+        fields = ['id', 'text', 'category', 'choice1', 'choice2', 'choice3', 'correct_choice', 'picture']
 
     def validate(self, data):
         # Check that none of the choices are blank
