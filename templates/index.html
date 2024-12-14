@@ -1,6 +1,8 @@
 {% extends 'base.html' %} {% load static %} 
 
     {% block content %}
+    <div id="paypal-button-container" class="paypal-button-container"></div>
+    <p id="result-message"></p>
     <canvas id="unity-canvas" width=1920 height=1080 style="width: 1920; height: 1080; background: #231F20"></canvas>
     <script src="{% static 'Build/LTO-Simulator.loader.js' %}"></script>
     <script>
