@@ -22,6 +22,7 @@
         document.body.style.textAlign = "left";
       }
 
+      var MyGameInstance = null;
       createUnityInstance(document.querySelector("#unity-canvas"), {
         dataUrl: "{% static 'Build/LTO-Simulator.data.unityweb' %}",
         frameworkUrl: "{% static 'Build/LTO-Simulator.framework.js.unityweb' %}",
@@ -32,6 +33,11 @@
         productVersion: "1.0",
         matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
         devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
-      });
+      })
+      .then((unityInstance) => {
+          MyGameInstance = unityInstance;
+        }).catch((message) => {
+          alert(message);
+        });
     </script>
 {% endblock %}
