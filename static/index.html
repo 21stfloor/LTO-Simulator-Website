@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
   <body>
+    <div id="paypal-button-container" class="paypal-button-container"></div>
+    <p id="result-message"></p>
     <div id="unity-container" class="unity-desktop">
       <canvas id="unity-canvas" width=960 height=600></canvas>
       <div id="unity-loading-bar">
@@ -23,6 +25,9 @@
         <div id="unity-build-title">LTO-simulator</div>
       </div>
     </div>
+
+    <script src="https://www.paypal.com/sdk/js?client-id=AWRQINwOXTWKa1lDmErPblsJuCHgd55NL_SLY30HDoD77UthbTIBbFxjPjc5KxF9ExmJH1QV_wpv4RHo&buyer-country=PH&currency=PHP&components=buttons"></script>
+  
     <script>
       var container = document.querySelector("#unity-container");
       var canvas = document.querySelector("#unity-canvas");
@@ -99,12 +104,14 @@
 
       loadingBar.style.display = "block";
 
+      var MyGameInstance = null;
       var script = document.createElement("script");
       script.src = loaderUrl;
       script.onload = () => {
         createUnityInstance(canvas, config, (progress) => {
           progressBarFull.style.width = 100 * progress + "%";
         }).then((unityInstance) => {
+          MyGameInstance = unityInstance;
           loadingBar.style.display = "none";
           fullscreenButton.onclick = () => {
             unityInstance.SetFullscreen(1);
@@ -114,6 +121,9 @@
         });
       };
       document.body.appendChild(script);
+
+
     </script>
+    
   </body>
 </html>
