@@ -35,6 +35,7 @@ from .serializers import TopUpRecordSerializer
 class TopUpRecordViewSet(viewsets.ModelViewSet):
     queryset = TopUpRecord.objects.all()
     serializer_class = TopUpRecordSerializer
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
         queryset = super().get_queryset()
