@@ -39,7 +39,7 @@ SECRET_KEY = 'django-insecure-(rby5ubl=%2=_8qhhro3nms+(9bsen1-v#kx#(s=hi!c)1oh(t
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'ltosimulator.pythonanywhere.com']
-
+CSRF_TRUSTED_ORIGINS = ['ltosimulator.pythonanywhere.com']
 
 # Application definition
 
