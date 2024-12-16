@@ -40,7 +40,7 @@ class Questiondmin(admin.ModelAdmin):
 
 @admin.register(TopUpRecord)
 class TopUpRecordAdmin(admin.ModelAdmin):
-    list_display = ('email', 'amount', 'timestamp')
+    list_display = ('email', 'amount', 'order_id', 'timestamp')
     list_filter = ('timestamp',)
     search_fields = ('email',)
 

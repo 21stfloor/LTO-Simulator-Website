@@ -5,7 +5,7 @@ from django.utils import timezone
 from ltosim.managers import CustomUserManager
 from django.utils.translation import gettext_lazy as _
 from django.db.models import Max
-
+import uuid
 from ltosim.settings import MAX_LESSON1_LEVELS_ENV, MAX_LESSON2_LEVELS_ENV, MAX_LESSON3_LEVELS_ENV
 
 
@@ -145,9 +145,10 @@ class Question(models.Model):
         return self.text
     
 class TopUpRecord(models.Model):
-    email = models.EmailField()  # Stores the PlayFab user's email
+    order_id = models.CharField(max_length=255, unique=True, default=uuid.uuid4)
+    email = models.EmailField()
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    timestamp = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField(auto_now_add=True)  # Automatically set the creation date
 
     def __str__(self):
-        return f"{self.email} - {self.amount} - {self.timestamp}"
+        return f"TopUp {self.order_id} - {self.email} - {self.amount}"

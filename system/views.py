@@ -34,16 +34,17 @@ from .models import TopUpRecord
 from .serializers import TopUpRecordSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework import status
 
-@method_decorator(csrf_exempt, name='dispatch')
-@api_view(['POST'])  # Accept only POST requests
+# @method_decorator(csrf_exempt, name='dispatch')
+@api_view(['POST'])
 def topup_record(request):
     if request.method == 'POST':
         serializer = TopUpRecordSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()  # Save the new top-up record
-            return Response(serializer.data, status=201)  # Return success response
-        return Response(serializer.errors, status=400)  # Return error response if data is invalid
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class TopUpRecordViewSet(viewsets.ModelViewSet):
     queryset = TopUpRecord.objects.all()

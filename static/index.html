@@ -10,6 +10,8 @@
   <body>
     <div id="paypal-button-container" class="paypal-button-container"></div>
     <p id="result-message"></p>
+    <input type="hidden" id="csrf-token" value="{{ csrf_token }}">
+
     <div id="unity-container" class="unity-desktop">
       <canvas id="unity-canvas" width=960 height=600></canvas>
       <div id="unity-loading-bar">

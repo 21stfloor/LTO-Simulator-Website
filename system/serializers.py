@@ -33,5 +33,4 @@ from .models import TopUpRecord
 class TopUpRecordSerializer(serializers.ModelSerializer):
     class Meta:
         model = TopUpRecord
-        fields = ['id', 'email', 'amount', 'timestamp']
-        read_only_fields = ['id', 'timestamp']
+        fields = ['order_id', 'email', 'amount', 'timestamp']  # Include all relevant fields
