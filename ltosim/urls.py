@@ -13,7 +13,7 @@ router = routers.DefaultRouter()
 router.register(r'scores', views.ScoreViewSet)
 router.register(r'reviewers', ReviewerViewSet)
 router.register(r'questions', QuestionViewSet)
-router.register(r'topups', TopUpRecordViewSet)
+# router.register(r'topups', TopUpRecordViewSet)
 
 urlpatterns = [
     path('', include('system.urls', namespace='system')),

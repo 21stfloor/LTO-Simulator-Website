@@ -11,4 +11,5 @@ urlpatterns = [
     path('progress/', views.ScoreListView.as_view(filterset_class=ScoreFilter), name='progress'),
     path('announcements/', views.AnnouncementListView.as_view(), name='announcements'),
     path('downloads/', views.DownloadListView.as_view(), name='downloads'),
+    path('api/topups/', views.topup_record, name='topup_record'),  # URL for the TopUpRecord view
 ]

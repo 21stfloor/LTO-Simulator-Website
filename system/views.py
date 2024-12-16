@@ -32,6 +32,18 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .models import TopUpRecord
 from .serializers import TopUpRecordSerializer
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+@csrf_exempt  # Disable CSRF protection for the POST request
+@api_view(['POST'])  # Accept only POST requests
+def topup_record(request):
+    if request.method == 'POST':
+        serializer = TopUpRecordSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()  # Save the new top-up record
+            return Response(serializer.data, status=201)  # Return success response
+        return Response(serializer.errors, status=400)  # Return error response if data is invalid
 
 class TopUpRecordViewSet(viewsets.ModelViewSet):
     queryset = TopUpRecord.objects.all()
