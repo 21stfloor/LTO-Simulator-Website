@@ -37,6 +37,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 # @method_decorator(csrf_exempt, name='dispatch')
+@csrf_exempt
 @api_view(['POST'])
 def topup_record(request):
     if request.method == 'POST':
