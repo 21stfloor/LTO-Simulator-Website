@@ -27,3 +27,11 @@ class QuestionSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Correct choice must be one of the given choices.")
         
         return data
+    
+from .models import TopUpRecord
+
+class TopUpRecordSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TopUpRecord
+        fields = ['id', 'email', 'amount', 'timestamp']
+        read_only_fields = ['id', 'timestamp']

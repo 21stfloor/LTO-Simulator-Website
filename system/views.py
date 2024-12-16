@@ -29,6 +29,19 @@ from django.contrib.auth.decorators import user_passes_test
 import requests
 from django.http import JsonResponse
 
+from .models import TopUpRecord
+from .serializers import TopUpRecordSerializer
+
+class TopUpRecordViewSet(viewsets.ModelViewSet):
+    queryset = TopUpRecord.objects.all()
+    serializer_class = TopUpRecordSerializer
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        email = self.request.query_params.get('email', None)
+        if email is not None:
+            queryset = queryset.filter(email=email)
+        return queryset
 
 def index(request):
     context = {}

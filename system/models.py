@@ -143,3 +143,11 @@ class Question(models.Model):
 
     def __str__(self):
         return self.text
+    
+class TopUpRecord(models.Model):
+    email = models.EmailField()  # Stores the PlayFab user's email
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.email} - {self.amount} - {self.timestamp}"

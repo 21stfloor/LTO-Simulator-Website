@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from system import views
-from system.models import Announcement, CustomUser, Download, Question, Reviewer, Score
+from system.models import Announcement, CustomUser, Download, Question, Reviewer, Score, TopUpRecord
 from django.contrib.auth.models import Group
 from django_reverse_admin import ReverseModelAdmin
 from admin_interface.models import Theme
@@ -36,7 +36,16 @@ class ReviewerAdmin(admin.ModelAdmin):
 class Questiondmin(admin.ModelAdmin):
     list_display = ('text', 'category', 'correct_choice')
 
+    
 
+@admin.register(TopUpRecord)
+class TopUpRecordAdmin(admin.ModelAdmin):
+    list_display = ('email', 'amount', 'timestamp')
+    list_filter = ('timestamp',)
+    search_fields = ('email',)
+
+
+admin_site.register(TopUpRecord, TopUpRecordAdmin)
 admin_site.register(Reviewer, ReviewerAdmin)
 admin_site.register(Question, Questiondmin)
 

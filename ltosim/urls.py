@@ -5,7 +5,7 @@ from django.conf import settings
 from system import views
 from rest_framework import routers, serializers, viewsets
 from django.contrib.auth.views import LogoutView
-from system.views import MyLoginView, QuestionViewSet, ReviewerViewSet
+from system.views import MyLoginView, QuestionViewSet, ReviewerViewSet, TopUpRecordViewSet
 from django.urls import include, re_path
 from system.admin import admin_site
 
@@ -13,6 +13,7 @@ router = routers.DefaultRouter()
 router.register(r'scores', views.ScoreViewSet)
 router.register(r'reviewers', ReviewerViewSet)
 router.register(r'questions', QuestionViewSet)
+router.register(r'topups', TopUpRecordViewSet)
 
 urlpatterns = [
     path('', include('system.urls', namespace='system')),
