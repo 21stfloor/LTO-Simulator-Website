@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     "colorfield",
     # 'system.apps.MyOwnConfig',
     'django.contrib.admin',
-    
+    'corsheaders',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -80,6 +80,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -203,3 +204,5 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 PLAYFAB_SECRET_KEY = 'NEWWSYXID3P4CU5HZKCZHAN96KWAW8I83PJOOYK358F3Q97XHM'
+
+CORS_ALLOW_ALL_ORIGINS = True
