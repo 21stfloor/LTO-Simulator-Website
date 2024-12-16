@@ -28,6 +28,7 @@ from django.http import HttpResponseForbidden
 from django.contrib.auth.decorators import user_passes_test
 import requests
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import TopUpRecord
 from .serializers import TopUpRecordSerializer
@@ -36,6 +37,10 @@ class TopUpRecordViewSet(viewsets.ModelViewSet):
     queryset = TopUpRecord.objects.all()
     serializer_class = TopUpRecordSerializer
     permission_classes = [AllowAny]
+
+    @csrf_exempt  # Disable CSRF protection for the 'create' method
+    def create(self, request, *args, **kwargs):
+        return super().create(request, *args, **kwargs)
 
     def get_queryset(self):
         queryset = super().get_queryset()
