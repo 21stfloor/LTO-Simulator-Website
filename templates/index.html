@@ -3,6 +3,7 @@
     {% block content %}
     <div id="paypal-button-container" class="paypal-button-container"></div>
     <p id="result-message"></p>
+    <input type="hidden" id="csrf-token" value="{{ csrf_token }}">
     <canvas id="unity-canvas" width=1920 height=1080 style="width: 1920; height: 1080; background: #231F20"></canvas>
     <script src="{% static 'Build/LTO-Simulator.loader.js' %}"></script>
     <script src="https://www.paypal.com/sdk/js?client-id=AWRQINwOXTWKa1lDmErPblsJuCHgd55NL_SLY30HDoD77UthbTIBbFxjPjc5KxF9ExmJH1QV_wpv4RHo&buyer-country=PH&currency=PHP&components=buttons"></script>
