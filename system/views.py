@@ -29,13 +29,13 @@ from django.contrib.auth.decorators import user_passes_test
 import requests
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-
+from django.utils.decorators import method_decorator
 from .models import TopUpRecord
 from .serializers import TopUpRecordSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-@csrf_exempt  # Disable CSRF protection for the POST request
+@method_decorator(csrf_exempt, name='dispatch')
 @api_view(['POST'])  # Accept only POST requests
 def topup_record(request):
     if request.method == 'POST':
